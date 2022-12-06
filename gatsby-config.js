@@ -5,5 +5,5 @@ module.exports = {
   siteMetadata: {
     siteUrl: `https://www.joaomattos.com`,
   },
-  plugins: [],
+  plugins: ['gatsby-plugin-postcss',],
 }
