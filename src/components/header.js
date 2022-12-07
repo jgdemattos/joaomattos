@@ -1,6 +1,8 @@
 import React from "react"
-import { Link } from "gatsby"
-const Header = () => {
+import { Link, useI18next } from "gatsby-plugin-react-i18next"
+
+const Header = ({ alternativeLanguages }) => {
+  const { languages, originalPath, t, i18n } = useI18next()
   return (
     <>
       <div className="navbar bg-base-100">
@@ -26,13 +28,13 @@ const Header = () => {
               className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/">{t("header-menu-home")}</Link>
               </li>
               <li>
-                <Link to="/blog/">Blog</Link>
+                <Link to="/blog/">{t("header-menu-blog")}</Link>
               </li>
               <li>
-                <Link to="/portfolio/">Home</Link>
+                <Link to="/portfolio/">{t("header-menu-portfolio")}</Link>
               </li>
             </ul>
           </div>
@@ -40,22 +42,58 @@ const Header = () => {
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">João Mattos</a>
         </div>
-        <div className="flex-none">
-          <button className="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="inline-block w-5 h-5 stroke-current"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-              ></path>
-            </svg>
+        <div className="dropdown dropdown-bottom dropdown-end">
+          <button tabIndex={0} className="btn btn-square btn-ghost">
+            {i18n.resolvedLanguage}
           </button>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu shadow bg-base-100 rounded-box "
+          >
+            {(alternativeLanguages && alternativeLanguages.nodes.length > 0 && (
+              <li>
+                {alternativeLanguages.nodes.map((lng, i) => (
+                  <Link
+                    key={i}
+                    to={"/blog/" + lng.slug}
+                    language={lng.locale}
+                    style={{
+                      textDecoration:
+                        i18n.resolvedLanguage === lng.locale
+                          ? "underline"
+                          : "none",
+                    }}
+                  >
+                    <button
+                      /* className="btn btn-ghost btn-circle" */ className="uppercase"
+                    >
+                      {lng.locale}
+                    </button>
+                  </Link>
+                ))}
+              </li>
+            )) || (
+              <li>
+                {languages.map((lng, i) => (
+                  <Link
+                    key={i}
+                    to={originalPath}
+                    language={lng}
+                    style={{
+                      textDecoration:
+                        i18n.resolvedLanguage === lng ? "underline" : "none",
+                    }}
+                  >
+                    <button
+                      /* className="btn btn-ghost btn-circle" */ className="uppercase"
+                    >
+                      {lng}
+                    </button>
+                  </Link>
+                ))}
+              </li>
+            )}
+          </ul>
         </div>
       </div>
     </>

@@ -3,10 +3,10 @@ import "./layout.css"
 import Header from "./header"
 import Footer from "./footer"
 
-const Layout = ({ children }) => {
+const Layout = ({ children, alternativeLanguages }) => {
   return (
     <div data-theme="night">
-      <Header></Header>
+      <Header alternativeLanguages={alternativeLanguages}></Header>
       <main>{children}</main>
       <Footer></Footer>
     </div>
