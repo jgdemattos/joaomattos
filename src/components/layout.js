@@ -1,8 +1,16 @@
 import React from "react"
 import "./layout.css"
+import Header from "./header"
+import Footer from "./footer"
 
 const Layout = ({ children }) => {
-  return <main>{children}</main>
+  return (
+    <div data-theme="night">
+      <Header></Header>
+      <main>{children}</main>
+      <Footer></Footer>
+    </div>
+  )
 }
 
 export default Layout
