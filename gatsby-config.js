@@ -1,6 +1,12 @@
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
+
+require("dotenv").config()
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     siteUrl: `https://www.joaomattos.com`,
@@ -27,6 +33,20 @@ module.exports = {
         host: "https://www.joaomattos.com",
         sitemap: "https://www.joaomattos.com/sitemap-index.xml",
         policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
+    {
+      resolve: `gatsby-source-datocms`,
+      options: {
+        apiToken: process.env.DATOCMS_API_TOKEN,
+        environment: process.env.DATOCMS_ENVIRONMENT,
+        environment: `main`,
+        previewMode: false,
+        disableLiveReload: false,
+        localeFallbacks: {
+          pt: ["en"],
+        },
+        pageSize: 10,
       },
     },
     {
