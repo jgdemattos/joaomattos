@@ -123,4 +123,25 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
+
+  articlesPT.forEach(({ node: current, previous, next }, index) => {
+    const altLangArticles = getAltLangArticles(
+      current.originalId,
+      allArticlesByLang
+    )
+    current.slug &&
+      createPage({
+        path: `/pt/blog/${current.slug}`,
+        component: path.resolve(__dirname, "src/templates/article.js"),
+        context: {
+          slug: current.slug,
+          previousPostId: previous?.originalId,
+          nextPostId: next?.originalId,
+          alternativeLanguages: altLangArticles,
+          language: "pt",
+          originalId: current.originalId,
+          updatedAt: current.meta.updatedAt,
+        },
+      })
+  })
 }
