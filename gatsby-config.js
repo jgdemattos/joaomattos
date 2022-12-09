@@ -34,6 +34,7 @@ module.exports = {
         defaultLanguage: "en",
         siteUrl: "https://www.joaomattos.com/",
         trailingSlash: "always",
+        redirect: false,
         i18nextOptions: {
           interpolation: {
             escapeValue: false,

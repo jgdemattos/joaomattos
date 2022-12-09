@@ -3,6 +3,9 @@ import { Link, useI18next } from "gatsby-plugin-react-i18next"
 
 const Header = ({ alternativeLanguages }) => {
   const { languages, originalPath, t, i18n } = useI18next()
+  const langsAvaliable =
+    alternativeLanguages && Object.entries(alternativeLanguages)
+
   return (
     <>
       <div className="navbar bg-base-100">
@@ -50,16 +53,16 @@ const Header = ({ alternativeLanguages }) => {
             tabIndex={0}
             className="dropdown-content menu shadow bg-base-100 rounded-box "
           >
-            {(alternativeLanguages && alternativeLanguages.nodes.length > 0 && (
+            {(langsAvaliable && langsAvaliable.length > 0 && (
               <li>
-                {alternativeLanguages.nodes.map((lng, i) => (
+                {langsAvaliable.map((article, i) => (
                   <Link
                     key={i}
-                    to={"/blog/" + lng.slug}
-                    language={lng.locale}
+                    to={"/blog/" + article[1]}
+                    language={article[0]}
                     style={{
                       textDecoration:
-                        i18n.resolvedLanguage === lng.locale
+                        i18n.resolvedLanguage === article[0]
                           ? "underline"
                           : "none",
                     }}
@@ -67,7 +70,7 @@ const Header = ({ alternativeLanguages }) => {
                     <button
                       /* className="btn btn-ghost btn-circle" */ className="uppercase"
                     >
-                      {lng.locale}
+                      {article[0]}
                     </button>
                   </Link>
                 ))}
