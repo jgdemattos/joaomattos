@@ -3,21 +3,26 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { StructuredText } from "react-datocms"
 
-const Article = ({
-  data: {
-    datoCmsArticle: { title },
-    locales,
-  },
-  pageContext: { alternativeLanguages },
-}) => {
+const Article = data => {
+  const {
+    data: {
+      datoCmsArticle: { title },
+      locales,
+    },
+    pageContext: { alternativeLanguages },
+  } = data
   return <Layout alternativeLanguages={alternativeLanguages}>{title}</Layout>
 }
 
 export default Article
 
 export const pageQuery = graphql`
-  query ArticleBySlug($slug: String!, $language: String!) {
-    datoCmsArticle(slug: { eq: $slug }) {
+  query ArticleBySlug(
+    $originalId: String!
+    $articleLang: String!
+    $language: String!
+  ) {
+    datoCmsArticle(originalId: { eq: $originalId }, locale: $articleLang) {
       meta {
         firstPublishedAt
         updatedAt

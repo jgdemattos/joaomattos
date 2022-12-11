@@ -3,9 +3,6 @@ import { Link, useI18next } from "gatsby-plugin-react-i18next"
 
 const Header = ({ alternativeLanguages }) => {
   const { languages, originalPath, t, i18n } = useI18next()
-  const langsAvaliable =
-    alternativeLanguages && Object.entries(alternativeLanguages)
-
   return (
     <>
       <div className="navbar bg-base-100">
@@ -53,29 +50,33 @@ const Header = ({ alternativeLanguages }) => {
             tabIndex={0}
             className="dropdown-content menu shadow bg-base-100 rounded-box "
           >
-            {(langsAvaliable && langsAvaliable.length > 0 && (
-              <li>
-                {langsAvaliable.map((article, i) => (
-                  <Link
-                    key={i}
-                    to={"/blog/" + article[1]}
-                    language={article[0]}
-                    style={{
-                      textDecoration:
-                        i18n.resolvedLanguage === article[0]
-                          ? "underline"
-                          : "none",
-                    }}
-                  >
-                    <button
-                      /* className="btn btn-ghost btn-circle" */ className="uppercase"
-                    >
-                      {article[0]}
-                    </button>
-                  </Link>
-                ))}
-              </li>
-            )) || (
+            {(alternativeLanguages &&
+              Object.values(alternativeLanguages).length > 0 && (
+                <li>
+                  {Object.values(alternativeLanguages).map(
+                    (language, i) =>
+                      language && (
+                        <Link
+                          key={i}
+                          to={"/blog/" + language.slug}
+                          language={language.lang}
+                          style={{
+                            textDecoration:
+                              i18n.resolvedLanguage === language.lang
+                                ? "underline"
+                                : "none",
+                          }}
+                        >
+                          <button
+                            /* className="btn btn-ghost btn-circle" */ className="uppercase"
+                          >
+                            {language.lang}
+                          </button>
+                        </Link>
+                      )
+                  )}
+                </li>
+              )) || (
               <li>
                 {languages.map((lng, i) => (
                   <Link

@@ -1,25 +1,14 @@
 const path = require(`path`)
 const { languages, defaultLanguage } = require("./languages")
 
-const getAltLangArticles = (currentOriginalId, allArticlesByLang) => {
-  let altLangArticles = {}
+const getAllSlugLangNames = languages =>
+  languages.map(lang => ({ name: "slug" + lang.toUpperCase(), lang: lang }))
 
-  for (const [lang, articles] of Object.entries(allArticlesByLang)) {
-    const filteredArticle = articles.reduce(
-      (previousValue, currentValue, index) => {
-        if (currentValue.node.originalId === currentOriginalId) {
-          return currentValue.node.slug
-        } else {
-          return previousValue
-        }
-      },
-      0
-    )
-    altLangArticles = { ...altLangArticles, [lang]: filteredArticle }
-  }
-
-  return altLangArticles
-}
+const getAvailableAltLangSlugs = (currentArticle, allSlugLangNames) =>
+  allSlugLangNames.map(
+    ({ name, lang }) =>
+      currentArticle[name] && { lang: lang, slug: currentArticle[name] }
+  )
 
 /**
  * Workaround for missing sitePage.context(used for quering pages on sitemap plugin):
@@ -49,7 +38,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   //gets all posts that are not null(language variations that were not published yet) by language(as of source plugin lastest update)
-  const queryDataEN = await graphql(`
+  const queryData = await graphql(`
     {
       allDatoCmsArticle(filter: { slug: { ne: null } }, locale: "en") {
         edges {
@@ -63,7 +52,8 @@ exports.createPages = async ({ graphql, actions }) => {
             meta {
               updatedAt
             }
-            slug
+            slugPT: slug(locale: "pt")
+            slugEN: slug(locale: "en")
             originalId
             locales
           }
@@ -72,73 +62,38 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  const articlesEN = queryDataEN.data.allDatoCmsArticle.edges
+  const articles = queryData.data.allDatoCmsArticle.edges
 
-  const queryDataPT = await graphql(`
-    {
-      allDatoCmsArticle(filter: { slug: { ne: null } }, locale: "pt") {
-        edges {
-          previous {
-            originalId
-          }
-          next {
-            originalId
-          }
-          node {
-            meta {
-              updatedAt
-            }
-            slug
-            originalId
-            locales
-          }
-        }
-      }
-    }
-  `)
-
-  const articlesPT = queryDataPT.data.allDatoCmsArticle.edges
-
-  const allArticlesByLang = {
-    pt: queryDataPT.data.allDatoCmsArticle.edges,
-    en: queryDataEN.data.allDatoCmsArticle.edges,
-  }
-
-  articlesEN.forEach(({ node: current, previous, next }, index) => {
-    const altLangArticles = getAltLangArticles(
-      current.originalId,
-      allArticlesByLang
-    )
+  articles.forEach(({ node: current, previous, next }, index) => {
     createPage({
-      path: `/blog/${current.slug}`,
+      path: `/blog/${current.slugEN}`,
       component: path.resolve(__dirname, "src/templates/article.js"),
       context: {
-        slug: current.slug,
+        slug: current.slugEN,
         previousPostId: previous?.originalId,
         nextPostId: next?.originalId,
-        alternativeLanguages: altLangArticles,
-        language: "en",
+        alternativeLanguages: getAvailableAltLangSlugs(
+          current,
+          getAllSlugLangNames(languages)
+        ),
+        articleLang: "en",
         originalId: current.originalId,
         updatedAt: current.meta.updatedAt,
       },
     })
-  })
-
-  articlesPT.forEach(({ node: current, previous, next }, index) => {
-    const altLangArticles = getAltLangArticles(
-      current.originalId,
-      allArticlesByLang
-    )
-    current.slug &&
+    current.slugPT &&
       createPage({
-        path: `/pt/blog/${current.slug}`,
+        path: `/pt/blog/${current.slugPT}`,
         component: path.resolve(__dirname, "src/templates/article.js"),
         context: {
-          slug: current.slug,
+          slug: current.slugEN,
           previousPostId: previous?.originalId,
           nextPostId: next?.originalId,
-          alternativeLanguages: altLangArticles,
-          language: "pt",
+          alternativeLanguages: getAvailableAltLangSlugs(
+            current,
+            getAllSlugLangNames(languages)
+          ),
+          articleLang: "pt",
           originalId: current.originalId,
           updatedAt: current.meta.updatedAt,
         },
