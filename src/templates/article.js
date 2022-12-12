@@ -6,12 +6,43 @@ import { StructuredText } from "react-datocms"
 const Article = data => {
   const {
     data: {
-      datoCmsArticle: { title },
+      datoCmsArticle: { title, featuredImage, description, articleContent },
       locales,
     },
     pageContext: { alternativeLanguages },
   } = data
-  return <Layout alternativeLanguages={alternativeLanguages}>{title}</Layout>
+  console.log(title)
+  return (
+    <Layout alternativeLanguages={alternativeLanguages}>
+      <header>
+        <div
+          className="hero"
+          style={{
+            backgroundImage: `url("${featuredImage.url}")`,
+          }}
+        >
+          <div className="hero-overlay bg-opacity-60"></div>
+          <div className="hero-content text-center text-neutral-content">
+            <div className="max-w-md">
+              <h1 className="mb-5 text-5xl font-bold">{title}</h1>
+              <p className="mb-5">{description}</p>
+            </div>
+          </div>
+        </div>
+      </header>
+      <article className="prose lg:prose-xl max-w-2xl container mx-auto py-8 px-4">
+        <section itemProp="articleBody">
+          <StructuredText
+            data={articleContent}
+            renderBlock={({ record }) => {
+              return <img src={record.image.url} alt={record.image.alt} />
+            }}
+          />
+        </section>
+        <hr />
+      </article>
+    </Layout>
+  )
 }
 
 export default Article
@@ -37,6 +68,19 @@ export const pageQuery = graphql`
       }
       slug
       title
+      description
+      articleContent {
+        value
+        blocks {
+          ... on DatoCmsArticleImage {
+            id: originalId
+            image {
+              url
+              alt
+            }
+          }
+        }
+      }
       author {
         name
         role
