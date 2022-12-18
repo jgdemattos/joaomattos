@@ -11,7 +11,6 @@ const Article = data => {
     },
     pageContext: { alternativeLanguages },
   } = data
-  console.log(title)
   return (
     <Layout alternativeLanguages={alternativeLanguages}>
       <header>

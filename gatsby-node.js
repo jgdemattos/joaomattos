@@ -1,15 +1,6 @@
 const path = require(`path`)
 const { languages, defaultLanguage } = require("./languages")
 
-const getAllSlugLangNames = languages =>
-  languages.map(lang => ({ name: "slug" + lang.toUpperCase(), lang: lang }))
-
-const getAvailableAltLangSlugs = (currentArticle, allSlugLangNames) =>
-  allSlugLangNames.map(
-    ({ name, lang }) =>
-      currentArticle[name] && { lang: lang, slug: currentArticle[name] }
-  )
-
 /**
  * Workaround for missing sitePage.context(used for quering pages on sitemap plugin):
  * Used for generating sitemap with `gatsby-plugin-react-i18next` and `gatsby-plugin-sitemap` plugins
@@ -49,6 +40,10 @@ exports.createPages = async ({ graphql, actions }) => {
             originalId
           }
           node {
+            _allSlugLocales {
+              value
+              locale
+            }
             meta {
               updatedAt
             }
@@ -72,10 +67,7 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: current.slugEN,
         previousPostId: previous?.originalId,
         nextPostId: next?.originalId,
-        alternativeLanguages: getAvailableAltLangSlugs(
-          current,
-          getAllSlugLangNames(languages)
-        ),
+        alternativeLanguages: current._allSlugLocales,
         articleLang: "en",
         originalId: current.originalId,
         updatedAt: current.meta.updatedAt,
@@ -89,10 +81,7 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: current.slugEN,
           previousPostId: previous?.originalId,
           nextPostId: next?.originalId,
-          alternativeLanguages: getAvailableAltLangSlugs(
-            current,
-            getAllSlugLangNames(languages)
-          ),
+          alternativeLanguages: current._allSlugLocales,
           articleLang: "pt",
           originalId: current.originalId,
           updatedAt: current.meta.updatedAt,

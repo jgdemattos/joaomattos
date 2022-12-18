@@ -50,33 +50,32 @@ const Header = ({ alternativeLanguages }) => {
             tabIndex={0}
             className="dropdown-content menu shadow bg-base-100 rounded-box "
           >
-            {(alternativeLanguages &&
-              Object.values(alternativeLanguages).length > 0 && (
-                <li>
-                  {Object.values(alternativeLanguages).map(
-                    (language, i) =>
-                      language && (
-                        <Link
-                          key={i}
-                          to={"/blog/" + language.slug}
-                          language={language.lang}
-                          style={{
-                            textDecoration:
-                              i18n.resolvedLanguage === language.lang
-                                ? "underline"
-                                : "none",
-                          }}
+            {(alternativeLanguages && alternativeLanguages.length > 0 && (
+              <li>
+                {alternativeLanguages.map(
+                  (language, i) =>
+                    language && (
+                      <Link
+                        key={i}
+                        to={"/blog/" + language.value}
+                        language={language.locale}
+                        style={{
+                          textDecoration:
+                            i18n.resolvedLanguage === language.locale
+                              ? "underline"
+                              : "none",
+                        }}
+                      >
+                        <button
+                          /* className="btn btn-ghost btn-circle" */ className="uppercase"
                         >
-                          <button
-                            /* className="btn btn-ghost btn-circle" */ className="uppercase"
-                          >
-                            {language.lang}
-                          </button>
-                        </Link>
-                      )
-                  )}
-                </li>
-              )) || (
+                          {language.locale}
+                        </button>
+                      </Link>
+                    )
+                )}
+              </li>
+            )) || (
               <li>
                 {languages.map((lng, i) => (
                   <Link
