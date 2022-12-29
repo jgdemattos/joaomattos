@@ -66,9 +66,9 @@ export const pageQuery = graphql`
         gatsbyImageData(width: 600, placeholder: BLURRED, forceBlurhash: false)
       }
       slug
-      title
-      description
-      articleContent {
+      title(locale: $articleLang)
+      description(locale: $articleLang)
+      articleContent(locale: $articleLang) {
         value
         blocks {
           ... on DatoCmsArticleImage {
