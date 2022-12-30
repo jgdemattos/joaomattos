@@ -6,6 +6,7 @@ require("dotenv").config()
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+const { languages, defaultLanguage } = require("./languages")
 
 module.exports = {
   siteMetadata: {
@@ -30,7 +31,7 @@ module.exports = {
       resolve: "gatsby-plugin-react-i18next",
       options: {
         localeJsonSourceName: "locale",
-        languages: ["en", "pt"],
+        languages: languages,
         defaultLanguage: "en",
         siteUrl: "https://www.joaomattos.com/",
         trailingSlash: "always",
