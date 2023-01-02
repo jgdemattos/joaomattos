@@ -2,28 +2,31 @@ import * as React from "react"
 import Layout from "../components/layout.js"
 import { graphql } from "gatsby"
 import ArticleList from "../components/article-list.js"
+import { GatsbyImage } from "gatsby-plugin-image"
+import { StructuredText } from "react-datocms"
 
 const IndexPage = ({
+  data,
   data: {
     allDatoCmsArticle: { nodes },
+    datoCmsHomePage,
   },
 }) => {
+  console.log(data)
   return (
     <Layout>
       {/* hero */}
       <section className=" body-font">
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+        <div className="container mx-auto flex px-5 pt-24 pb-12 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-primary">
-              Before they sold out
-              <br className="hidden lg:inline-block" />
-              readymade gluten
+            <h1 className="title-font sm:text-4xl text-3xl mb-2 font-medium text-primary">
+              {datoCmsHomePage.title}
             </h1>
             <p className="mb-8 leading-relaxed text-white">
-              Copper mug try-hard pitchfork pour-over freegan heirloom neutra
-              air plant cold-pressed tacos poke beard tote bag. Heirloom echo
-              park mlkshk tote bag selvage hot chicken authentic tumeric
-              truffaut hexagon try-hard chambray.
+              {datoCmsHomePage.subtitle}
+            </p>
+            <p className="prose lg:prose-xl max-w-2xl mb-8 leading-relaxed text-white">
+              <StructuredText data={datoCmsHomePage.description} />
             </p>
             <div className="flex justify-center">
               <button className="inline-flex   border-0 py-2 px-6 focus:outline-none  rounded text-lg btn-primary">
@@ -35,17 +38,19 @@ const IndexPage = ({
             </div>
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-            <img
-              className="object-cover object-center rounded"
-              alt="hero"
-              src="https://dummyimage.com/720x600"
+            <GatsbyImage
+              image={datoCmsHomePage.featuredImage.gatsbyImageData}
+              loading="lazy"
+              alt={datoCmsHomePage.featuredImage.alt}
+              title={datoCmsHomePage.featuredImage.title}
+              className="w-full h-full object-cover object-center"
             />
           </div>
         </div>
       </section>
       {/* hero end */}
       {/* blog */}
-      <section className=" bg-gray-900 body-font overflow-hidden">
+      <section className="body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <ArticleList articles={nodes}></ArticleList>
         </div>
@@ -61,6 +66,21 @@ export const Head = () => <title>Home Page</title>
 
 export const pageQuery = graphql`
   query ($language: String!) {
+    datoCmsHomePage(locale: $language) {
+      title(locale: $language)
+      subtitle(locale: $language)
+      description(locale: $language) {
+        value
+      }
+      featuredImage(locale: $language) {
+        width
+        height
+        alt
+        title
+        url
+        gatsbyImageData(width: 600, placeholder: BLURRED, forceBlurhash: false)
+      }
+    }
     allDatoCmsArticle(
       locale: $language
       filter: { slug: { ne: "null" } }
