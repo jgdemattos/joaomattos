@@ -88,4 +88,34 @@ exports.createPages = async ({ graphql, actions }) => {
         },
       })
   })
+
+  const numPages = Math.ceil(Math.ceil(articles.length / 3) / languages.length)
+
+  languages.forEach(lng => {
+    // Create the homepage
+    createPage({
+      path: (lng === "en" && `/blog/`) || `/${lng}/blog/`,
+      component: path.resolve(__dirname, "src/templates/blog.js"),
+      context: {
+        limit: 3,
+        skip: 0,
+        type: "blog",
+        language: lng,
+      },
+    })
+
+    // Create listing pages
+    Array.from({ length: numPages }).forEach((_, i) => {
+      createPage({
+        path: (lng === "en" && `/blog-${i + 1}/`) || `/${lng}/blog-${i + 1}/`,
+        component: path.resolve(__dirname, "src/templates/blog.js"),
+        context: {
+          limit: 3,
+          skip: i * 3,
+          type: "blog",
+          language: lng,
+        },
+      })
+    })
+  })
 }
