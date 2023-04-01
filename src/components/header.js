@@ -33,9 +33,9 @@ const Header = ({ alternativeLanguages }) => {
               <li>
                 <Link to="/blog/">{t("header-menu-blog")}</Link>
               </li>
-              <li>
+              {/*               <li>
                 <Link to="/portfolio/">{t("header-menu-portfolio")}</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

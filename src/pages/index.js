@@ -22,7 +22,7 @@ const IndexPage = ({
             <h1 className="title-font sm:text-4xl text-3xl mb-2 font-medium text-primary">
               {datoCmsHomePage.title}
             </h1>
-            <p className="mb-8 leading-relaxed text-white">
+            <p className="mb-8 leading-relaxed text-secondary">
               {datoCmsHomePage.subtitle}
             </p>
             <p className="prose lg:prose-xl max-w-2xl mb-8 leading-relaxed text-white">
