@@ -40,7 +40,11 @@ const Header = ({ alternativeLanguages }) => {
           </div>
         </div>
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">João Mattos</a>
+          <Link to="/">
+            <span className="btn btn-ghost normal-case text-xl">
+              João Mattos
+            </span>
+          </Link>
         </div>
         <div className="dropdown dropdown-bottom dropdown-end">
           <button tabIndex={0} className="btn btn-square btn-ghost">
