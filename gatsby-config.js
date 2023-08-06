@@ -102,5 +102,13 @@ module.exports = {
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-KR8QFC2Z",
+        defaultDataLayer: { platform: "gatsby" },
+        enableWebVitalsTracking: false,
+      },
+    },
   ],
 }
