@@ -61,7 +61,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   articles.forEach(({ node: current, previous, next }, index) => {
     createPage({
-      path: `/blog/${current.slugEN}`,
+      path: `/en/blog/${current.slugEN}`,
       component: path.resolve(__dirname, "src/templates/article.js"),
       context: {
         slug: current.slugEN,
@@ -75,7 +75,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
     current.slugPT &&
       createPage({
-        path: `/pt/blog/${current.slugPT}`,
+        path: `/blog/${current.slugPT}`,
         component: path.resolve(__dirname, "src/templates/article.js"),
         context: {
           slug: current.slugEN,
@@ -94,7 +94,7 @@ exports.createPages = async ({ graphql, actions }) => {
   languages.forEach(lng => {
     // Create the homepage
     createPage({
-      path: (lng === "en" && `/blog/`) || `/${lng}/blog/`,
+      path: (lng === "pt" && `/blog/`) || `/${lng}/blog/`,
       component: path.resolve(__dirname, "src/templates/blog.js"),
       context: {
         limit: 3,
@@ -107,7 +107,7 @@ exports.createPages = async ({ graphql, actions }) => {
     // Create listing pages
     Array.from({ length: numPages }).forEach((_, i) => {
       createPage({
-        path: (lng === "en" && `/blog-${i + 1}/`) || `/${lng}/blog-${i + 1}/`,
+        path: (lng === "pt" && `/blog-${i + 1}/`) || `/${lng}/blog-${i + 1}/`,
         component: path.resolve(__dirname, "src/templates/blog.js"),
         context: {
           limit: 3,

@@ -22,7 +22,7 @@ module.exports = {
         previewMode: false,
         disableLiveReload: false,
         localeFallbacks: {
-          pt: ["en"],
+          pt: ["pt"],
         },
         pageSize: 10,
       },
@@ -32,7 +32,7 @@ module.exports = {
       options: {
         localeJsonSourceName: "locale",
         languages: languages,
-        defaultLanguage: "en",
+        defaultLanguage: "pt",
         siteUrl: "https://www.joaomattos.com/",
         trailingSlash: "always",
         redirect: false,
