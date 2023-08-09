@@ -39,4 +39,4 @@ const ThankYouPage = () => {
 
 export default ThankYouPage
 
-export const Head = () => <title>Not found</title>
+export const Head = () => <title>Obrigado</title>

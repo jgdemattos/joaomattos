@@ -72,4 +72,4 @@ const ContactPage = () => {
 
 export default ContactPage
 
-export const Head = () => <title>Not found</title>
+export const Head = () => <title>Contato</title>
