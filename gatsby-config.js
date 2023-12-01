@@ -14,6 +14,9 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: "gatsby-remark-markmap",
+    },
+    {
       resolve: "gatsby-source-datocms",
       options: {
         apiToken: process.env.DATOCMS_API_TOKEN,

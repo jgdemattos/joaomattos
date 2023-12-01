@@ -2,15 +2,17 @@ import * as React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { StructuredText } from "react-datocms"
+import Mindamap from "../components/mindmap"
 
 const Article = data => {
   const {
     data: {
-      datoCmsArticle: { title, featuredImage, description, articleContent },
+      datoCmsArticle: { title, featuredImage, description, articleContent,mindmap },
       locales,
     },
     pageContext: { alternativeLanguages },
   } = data
+  console.log(mindmap)
   return (
     <Layout alternativeLanguages={alternativeLanguages}>
       <header>
@@ -29,6 +31,14 @@ const Article = data => {
           </div>
         </div>
       </header>
+      {mindmap!= null && (
+        <div className=" border-dashed border-x-transparent border-y-neutral-600 border-2">
+          <div className="max-w-4xl mx-auto ">
+            <Mindamap markdown={mindmap}></Mindamap>
+          </div>
+        </div>
+      )}
+
       <article className="prose lg:prose-lg text-white max-w-2xl container mx-auto py-8 px-4">
         <section itemProp="articleBody">
           <StructuredText
@@ -66,6 +76,7 @@ export const pageQuery = graphql`
         gatsbyImageData(width: 600, placeholder: BLURRED, forceBlurhash: false)
       }
       slug
+      mindmap
       title(locale: $articleLang)
       description(locale: $articleLang)
       articleContent(locale: $articleLang) {
