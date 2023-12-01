@@ -16,7 +16,7 @@ const Blog = ({
   const { t, i18n } = useI18next()
   return (
     <Layout>
-      <section className="text-gray-400 bg-gray-900 body-font overflow-hidden">
+      <section className="text-gray-400 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <ArticleList articles={nodes}></ArticleList>
 

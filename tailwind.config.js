@@ -5,9 +5,9 @@ module.exports = {
     "./src/templates/**/*.{js,jsx,ts,tsx}",
     "./src/components/**/*.{js,jsx,ts,tsx}",
   ],
-  themes: ["night"],
+  themes: ["halloween"],
   daisyui: {
-    darkTheme: "night",
+    darkTheme: "halloween",
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
 }

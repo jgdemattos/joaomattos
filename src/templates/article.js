@@ -29,7 +29,7 @@ const Article = data => {
           </div>
         </div>
       </header>
-      <article className="prose lg:prose-xl max-w-2xl container mx-auto py-8 px-4">
+      <article className="prose lg:prose-lg text-white max-w-2xl container mx-auto py-8 px-4">
         <section itemProp="articleBody">
           <StructuredText
             data={articleContent}

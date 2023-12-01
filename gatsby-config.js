@@ -10,7 +10,7 @@ const { languages, defaultLanguage } = require("./languages")
 
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.joaomattos.com",
+    siteUrl: "https://www.mattos.pro",
   },
   plugins: [
     {
@@ -33,7 +33,7 @@ module.exports = {
         localeJsonSourceName: "locale",
         languages: languages,
         defaultLanguage: "pt",
-        siteUrl: "https://www.joaomattos.com/",
+        siteUrl: "https://www.mattos.pro/",
         trailingSlash: "always",
         redirect: false,
         i18nextOptions: {
@@ -97,8 +97,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: "https://www.joaomattos.com",
-        sitemap: "https://www.joaomattos.com/sitemap-index.xml",
+        host: "https://www.mattos.pro",
+        sitemap: "https://www.mattos.pro/sitemap-index.xml",
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },

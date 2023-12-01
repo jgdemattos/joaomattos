@@ -5,7 +5,7 @@ const Header = ({ alternativeLanguages }) => {
   const { languages, originalPath, t, i18n } = useI18next()
   return (
     <>
-      <div className="navbar bg-base-100">
+      <div className="navbar">
         <div className="flex-none">
           <div className="dropdown">
             <button className="btn btn-square btn-ghost">
@@ -25,7 +25,7 @@ const Header = ({ alternativeLanguages }) => {
             </button>
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+              className="dropdown-content menu p-2 shadow rounded-box w-52"
             >
               <li>
                 <Link to="/">{t("header-menu-home")}</Link>
@@ -52,7 +52,7 @@ const Header = ({ alternativeLanguages }) => {
           </button>
           <ul
             tabIndex={0}
-            className="dropdown-content menu shadow bg-base-100 rounded-box "
+            className="dropdown-content menu shadow rounded-box "
           >
             {(alternativeLanguages && alternativeLanguages.length > 0 && (
               <li>

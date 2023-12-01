@@ -5,7 +5,7 @@ import Footer from "./footer"
 
 const Layout = ({ children, alternativeLanguages }) => {
   return (
-    <div data-theme="night">
+    <div>
       <Header alternativeLanguages={alternativeLanguages}></Header>
       <main>{children}</main>
       <Footer></Footer>
