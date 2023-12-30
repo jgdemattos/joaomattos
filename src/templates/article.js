@@ -14,7 +14,7 @@ const Article = data => {
   } = data
   return (
     <Layout alternativeLanguages={alternativeLanguages}>
-      <header>
+      {/* <header>
         <div
           className="hero"
           style={{
@@ -29,7 +29,7 @@ const Article = data => {
             </div>
           </div>
         </div>
-      </header>
+      </header> */}
       {/* {mindmap!= null && (
         <div className=" border-dashed border-x-transparent border-y-neutral-600 border-2">
           <div className="max-w-4xl mx-auto ">
@@ -43,7 +43,13 @@ const Article = data => {
           <StructuredText
             data={articleContent}
             renderBlock={({ record }) => {
-              return <img src={record.image.url} alt={record.image.alt} />
+              return (
+                <img
+                  src={record.image.url}
+                  alt={record.image.alt}
+                  className="rounded-2xl"
+                />
+              )
             }}
           />
         </section>
