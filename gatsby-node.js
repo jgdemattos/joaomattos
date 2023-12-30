@@ -60,21 +60,24 @@ exports.createPages = async ({ graphql, actions }) => {
   const articles = queryData.data.allDatoCmsArticle.edges
 
   articles.forEach(({ node: current, previous, next }, index) => {
-          createPage({
-        path: `/blog/${current.slugPT}`,
-        component: path.resolve(__dirname, "src/templates/article.js"),
-        context: {
-          slug: current.slugPT,
-          previousPostId: previous?.originalId,
-          nextPostId: next?.originalId,
-          alternativeLanguages: current._allSlugLocales,
-          articleLang: "pt",
-          originalId: current.originalId,
-          updatedAt: current.meta.updatedAt,
-        },
-      })
+    current.slugPT && console.log(current.slugPT)
+    current.slugEN && console.log(current.slugEN)
+      
+    current.slugPT && createPage({
+      path: `/blog/${current.slugPT}`,
+      component: path.resolve(__dirname, "src/templates/article.js"),
+      context: {
+        slug: current.slugPT,
+        previousPostId: previous?.originalId,
+        nextPostId: next?.originalId,
+        alternativeLanguages: current._allSlugLocales,
+        articleLang: "pt",
+        originalId: current.originalId,
+        updatedAt: current.meta.updatedAt,
+      },
+    })
     
-    current.slugEN &&
+    current.slugEN && current.slugEN &&
       createPage({
         path: `/en/blog/${current.slugEN}`,
         component: path.resolve(__dirname, "src/templates/article.js"),
