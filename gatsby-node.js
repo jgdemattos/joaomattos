@@ -31,7 +31,7 @@ exports.createPages = async ({ graphql, actions }) => {
   //gets all posts that are not null(language variations that were not published yet) by language(as of source plugin lastest update)
   const queryData = await graphql(`
     {
-      allDatoCmsArticle(filter: { slug: { ne: null } }, locale: "en") {
+      allDatoCmsArticle(locale: "pt", filter: { slug: { ne: "null" } }) {
         edges {
           previous {
             originalId
@@ -60,29 +60,30 @@ exports.createPages = async ({ graphql, actions }) => {
   const articles = queryData.data.allDatoCmsArticle.edges
 
   articles.forEach(({ node: current, previous, next }, index) => {
-    createPage({
-      path: `/en/blog/${current.slugEN}`,
-      component: path.resolve(__dirname, "src/templates/article.js"),
-      context: {
-        slug: current.slugEN,
-        previousPostId: previous?.originalId,
-        nextPostId: next?.originalId,
-        alternativeLanguages: current._allSlugLocales,
-        articleLang: "en",
-        originalId: current.originalId,
-        updatedAt: current.meta.updatedAt,
-      },
-    })
-    current.slugPT &&
-      createPage({
+          createPage({
         path: `/blog/${current.slugPT}`,
+        component: path.resolve(__dirname, "src/templates/article.js"),
+        context: {
+          slug: current.slugPT,
+          previousPostId: previous?.originalId,
+          nextPostId: next?.originalId,
+          alternativeLanguages: current._allSlugLocales,
+          articleLang: "pt",
+          originalId: current.originalId,
+          updatedAt: current.meta.updatedAt,
+        },
+      })
+    
+    current.slugEN &&
+      createPage({
+        path: `/en/blog/${current.slugEN}`,
         component: path.resolve(__dirname, "src/templates/article.js"),
         context: {
           slug: current.slugEN,
           previousPostId: previous?.originalId,
           nextPostId: next?.originalId,
           alternativeLanguages: current._allSlugLocales,
-          articleLang: "pt",
+          articleLang: "en",
           originalId: current.originalId,
           updatedAt: current.meta.updatedAt,
         },
