@@ -25,7 +25,7 @@ const Header = ({ alternativeLanguages }) => {
             </button>
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-2 shadow rounded-box w-52"
+              className="dropdown-content menu p-2 shadow rounded-box w-52 bg-black"
             >
               <li>
                 <Link to="/">{t("header-menu-home")}</Link>
@@ -52,7 +52,7 @@ const Header = ({ alternativeLanguages }) => {
           </button>
           <ul
             tabIndex={0}
-            className="dropdown-content menu shadow rounded-box "
+            className="dropdown-content menu shadow rounded-box bg-black"
           >
             {(alternativeLanguages && alternativeLanguages.length > 0 && (
               <li>

@@ -17,9 +17,9 @@ const ArticleList = ({ articles }) => {
                   {article.category.name}
                 </span>
                 <span className="mt-1 text-gray-500 text-sm">
-                  {DateTime.fromISO(article.meta.publishedAt)
+                  {DateTime.fromISO(article.date)
                     .setLocale(i18n.resolvedLanguage)
-                    .toLocaleString(DateTime.DATE_FULL)}
+                    .toLocaleString(DateTime.DATE_FULL)}{console.log(article)}
                 </span>
               </div>
               <Link to={"/blog/" + article.slug} key={article.slug}>

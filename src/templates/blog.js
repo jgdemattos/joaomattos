@@ -58,6 +58,7 @@ export const query = graphql`
         pageCount
       }
       nodes {
+        date
         category(locale: $language) {
           name(locale: $language)
           slug(locale: $language)

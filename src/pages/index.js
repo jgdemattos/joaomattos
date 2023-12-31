@@ -128,6 +128,7 @@ export const pageQuery = graphql`
         meta {
           publishedAt
         }
+        date
         slug(locale: $language)
         description(locale: $language)
         title(locale: $language)
