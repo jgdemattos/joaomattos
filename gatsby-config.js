@@ -167,7 +167,7 @@ module.exports = {
           }else{
             if(language==="pt"){
               links.push({ lang: "x-default", url })
-              links.push({ lang: language, url })
+              links.push({ lang: "pt", url })
             }else{
               links.push({ lang: language, url })
             }
