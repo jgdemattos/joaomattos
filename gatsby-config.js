@@ -163,6 +163,8 @@ module.exports = {
 
           if (!("alternativeLanguages" in node.pageContext)) {
             links.push({ lang: language, url })
+            let newURL = siteUrl +"/"+ "pt" + originalPath
+            links.push({ lang: "x-default", url:newURL })
           }else{
             if(language==="pt"){
               links.push({ lang: "x-default", url })
@@ -190,15 +192,13 @@ module.exports = {
           } else {
             //if no alternativeLanguages is provided, page is obtained from pages folder and url is not translated, only localized
             languages.forEach(lang => {
-              newUrl =
-                siteUrl +
-                ((lang !== defaultLanguage && "/" + lang) || "") +
-                originalPath
-              if(lang==="pt") links.push({ lang: "x-default", newUrl })
               if (lang === language) return
               links.push({
                 lang,
-                url: newUrl,
+                url:
+                  siteUrl +
+                  ((lang !== defaultLanguage && "/" + lang) || "") +
+                  originalPath,
               })
             })
           }
