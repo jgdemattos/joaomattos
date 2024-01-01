@@ -162,8 +162,7 @@ module.exports = {
           const links = []
 
           if (!("alternativeLanguages" in node.pageContext)) {
-            links.push({ lang: "x-default", url })
-            links.push({ lang: "pt", url })
+            links.push({ lang: language, url })
           }else{
             if(language==="pt"){
               links.push({ lang: "x-default", url })
@@ -193,7 +192,7 @@ module.exports = {
             languages.forEach(lang => {
               if (lang === language) return
               links.push({
-                lang,
+                lang: lang==="pt" ? "x-default": lang,
                 url:
                   siteUrl +
                   ((lang !== defaultLanguage && "/" + lang) || "") +
