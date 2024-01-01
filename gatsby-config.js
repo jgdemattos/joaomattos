@@ -160,8 +160,7 @@ module.exports = {
           //   url = url + "/"
           // }
           const links = [
-            // { lang: language, url },
-             { lang: "x-default", url },
+            language==="pt" ? { lang: "x-default", url } : { lang: language, url },
           ]
 
           //if alternativeLanguages is provided, page was created by createPages with datoCMS, and a unique slug is provided for each language
@@ -169,7 +168,7 @@ module.exports = {
             node.pageContext.alternativeLanguages.forEach(post => {
               if(language===post.locale) return null
               return links.push({
-                lang: post.locale,
+                lang: language==="pt" ? "x-default" : post.locale,
                 url:
                   siteUrl +
                   ((post.locale !== defaultLanguage && "/" + post.locale) ||
