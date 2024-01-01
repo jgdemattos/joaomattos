@@ -159,9 +159,19 @@ module.exports = {
           // if ("alternativeLanguages" in node.pageContext) {
           //   url = url + "/"
           // }
-          const links = [
-            language==="pt" ? { lang: "x-default", url } : { lang: language, url },
-          ]
+          const links = []
+
+          if (!("alternativeLanguages" in node.pageContext)) {
+            links.push({ lang: "x-default", url })
+            links.push({ lang: language, url })
+          }else{
+            if(language==="pt"){
+              links.push({ lang: "x-default", url })
+              links.push({ lang: language, url })
+            }else{
+              links.push({ lang: language, url })
+            }
+          }
 
           //if alternativeLanguages is provided, page was created by createPages with datoCMS, and a unique slug is provided for each language
           if ("alternativeLanguages" in node.pageContext) {
