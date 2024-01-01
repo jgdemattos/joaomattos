@@ -163,7 +163,7 @@ module.exports = {
 
           if (!("alternativeLanguages" in node.pageContext)) {
             links.push({ lang: language, url })
-            let newURL = siteUrl +"/"+ "pt" + originalPath
+            let newURL = siteUrl +"/" + originalPath
             links.push({ lang: "x-default", url:newURL })
           }else{
             if(language==="pt"){
