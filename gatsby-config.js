@@ -7,10 +7,11 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 const { languages, defaultLanguage } = require("./languages")
+const siteUrl = process.env.URL || `https://mattos.pro`
 
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.mattos.pro",
+    siteUrl: "https://www.mattos.pro/",
   },
   plugins: [
     {
@@ -103,6 +104,102 @@ module.exports = {
         host: "https://www.mattos.pro",
         sitemap: "https://www.mattos.pro/sitemap-index.xml",
         policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        output: "/",
+        createLinkInHead: true,
+
+        excludes: [
+          "/404",
+          "/404/",
+          "/*/404",
+          "404.html",
+          "/*/404.html",
+          "/*/blog-*/",
+          "/blog-*/",
+          "/dev-404-page/",
+          "/*/dev-404-page/",
+          "/confirmation/",
+        ],
+        resolveSiteUrl: () => siteUrl,
+        //(filter: {context: {i18n: {routed: {eq: false}}}})
+        query: `
+            {
+              site {
+                siteMetadata {
+                  siteUrl
+                }
+              }
+              allSitePage {
+                nodes {
+                  pageContext
+                  context {
+                    i18n {
+                      language
+                      languages
+                      defaultLanguage
+                      originalPath
+                    }
+                  }
+                  path
+                }
+              }
+            }
+          `,
+        serialize: node => {
+          const { language, languages, originalPath, defaultLanguage } =
+            node.context.i18n
+          const { updatedAt } = node.pageContext
+          const path = node.path
+          let url = siteUrl + path
+          //if page created by createpages, dosent have trailing slash, so we add at the end
+          // if ("alternativeLanguages" in node.pageContext) {
+          //   url = url + "/"
+          // }
+          const links = [
+            // { lang: language, url },
+             { lang: "x-default", url },
+          ]
+
+          //if alternativeLanguages is provided, page was created by createPages with datoCMS, and a unique slug is provided for each language
+          if ("alternativeLanguages" in node.pageContext) {
+            node.pageContext.alternativeLanguages.forEach(post => {
+              if(language===post.locale) return null
+              return links.push({
+                lang: post.locale,
+                url:
+                  siteUrl +
+                  ((post.locale !== defaultLanguage && "/" + post.locale) ||
+                    "") +
+                  "/blog/" +
+                  post.value +
+                  "/",
+              })
+            })
+          } else {
+            //if no alternativeLanguages is provided, page is obtained from pages folder and url is not translated, only localized
+            languages.forEach(lang => {
+              if (lang === language) return
+              links.push({
+                lang,
+                url:
+                  siteUrl +
+                  ((lang !== defaultLanguage && "/" + lang) || "") +
+                  originalPath,
+              })
+            })
+          }
+          return {
+            url,
+            /* changefreq: "daily",
+            priority: originalPath === "/" ? 1.0 : 0.7, */
+            lastmod: updatedAt,
+            links,
+          }
+        },
       },
     },
     {

@@ -60,8 +60,6 @@ exports.createPages = async ({ graphql, actions }) => {
   const articles = queryData.data.allDatoCmsArticle.edges
 
   articles.forEach(({ node: current, previous, next }, index) => {
-    current.slugPT && console.log(current.slugPT)
-    current.slugEN && console.log(current.slugEN)
       
     current.slugPT && createPage({
       path: `/blog/${current.slugPT}`,
