@@ -49,7 +49,7 @@ export const query = graphql`
   query articleByLanguage($language: String!, $limit: Int!, $skip: Int!) {
     allDatoCmsArticle(
       locale: $language
-      filter: { slug: { ne: "null" } }
+      filter: { slug: { ne: null } }
       limit: $limit
       skip: $skip
     ) {

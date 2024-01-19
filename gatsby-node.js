@@ -31,7 +31,7 @@ exports.createPages = async ({ graphql, actions }) => {
   //gets all posts that are not null(language variations that were not published yet) by language(as of source plugin lastest update)
   const queryData = await graphql(`
     {
-      allDatoCmsArticle(locale: "pt", filter: { slug: { ne: "null" } }) {
+      allDatoCmsArticle(locale: "pt", filter: { slug: { ne: null } }) {
         edges {
           previous {
             originalId
@@ -60,7 +60,6 @@ exports.createPages = async ({ graphql, actions }) => {
   const articles = queryData.data.allDatoCmsArticle.edges
 
   articles.forEach(({ node: current, previous, next }, index) => {
-      
     current.slugPT && createPage({
       path: `/blog/${current.slugPT}`,
       component: path.resolve(__dirname, "src/templates/article.js"),
@@ -99,7 +98,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: (lng === "pt" && `/blog/`) || `/${lng}/blog/`,
       component: path.resolve(__dirname, "src/templates/blog.js"),
       context: {
-        limit: 3,
+        limit: 5,
         skip: 0,
         type: "blog",
         language: lng,
@@ -112,8 +111,8 @@ exports.createPages = async ({ graphql, actions }) => {
         path: (lng === "pt" && `/blog-${i + 1}/`) || `/${lng}/blog-${i + 1}/`,
         component: path.resolve(__dirname, "src/templates/blog.js"),
         context: {
-          limit: 3,
-          skip: i * 3,
+          limit: 5,
+          skip: i * 5,
           type: "blog",
           language: lng,
         },

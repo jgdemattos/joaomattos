@@ -113,7 +113,7 @@ export const pageQuery = graphql`
     }
     allDatoCmsArticle(
       locale: $language
-      filter: { slug: { ne: "null" } }
+      filter: { slug: { ne: null } }
       limit: 3
     ) {
       pageInfo {

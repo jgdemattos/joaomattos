@@ -161,6 +161,7 @@ module.exports = {
           // }
           const links = []
 
+          //sets x-deafault for pt pages, when avaliable
           if (!("alternativeLanguages" in node.pageContext)) {
             links.push({ lang: language, url })
             let newURL = siteUrl + originalPath
