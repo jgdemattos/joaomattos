@@ -3,11 +3,11 @@ import React from 'react'
 function SocialIcons() {
   return (
     <div>
-      <span
-        className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
-        href="https://www.instagram.com/mattos.pro/"
-      >
-        <a className="ml-3 text-gray-400">
+      <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+        <a
+          className="ml-3 text-gray-400"
+          href="https://www.instagram.com/mattos.pro/"
+        >
           <svg
             fill="none"
             stroke="currentColor"
