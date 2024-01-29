@@ -12,6 +12,16 @@ const siteUrl = process.env.URL || `https://mattos.pro`
 module.exports = {
   siteMetadata: {
     siteUrl: "https://www.mattos.pro/",
+    author: {
+      name: `João Mattos`,
+      summary: `Advanced Marketing Analytics.`,
+    },
+    description: `Especialista em Marketing Analytics.`,
+    siteUrl: `https://mattos.pro/`,
+    siteUrlNoSlash: `https://mattos.pro`,
+    social: {
+      twitter: `mattospro`,
+    },
   },
   plugins: [
     {
@@ -165,12 +175,12 @@ module.exports = {
           if (!("alternativeLanguages" in node.pageContext)) {
             links.push({ lang: language, url })
             let newURL = siteUrl + originalPath
-            links.push({ lang: "x-default", url:newURL })
-          }else{
-            if(language==="pt"){
+            links.push({ lang: "x-default", url: newURL })
+          } else {
+            if (language === "pt") {
               links.push({ lang: "x-default", url })
               links.push({ lang: language, url })
-            }else{
+            } else {
               links.push({ lang: language, url })
             }
           }
@@ -178,7 +188,7 @@ module.exports = {
           //if alternativeLanguages is provided, page was created by createPages with datoCMS, and a unique slug is provided for each language
           if ("alternativeLanguages" in node.pageContext) {
             node.pageContext.alternativeLanguages.forEach(post => {
-              if(language===post.locale) return null
+              if (language === post.locale) return null
               return links.push({
                 lang: post.locale,
                 url:

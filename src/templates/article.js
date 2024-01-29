@@ -7,16 +7,18 @@ import SocialIcons from "../components/social-icons"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { DateTime } from "luxon"
 import { Link, useI18next } from "gatsby-plugin-react-i18next"
+import Seo from "../components/seo"
 
 const Article = data => {
   const {
-    data: {
+    data: {datoCmsArticle,
       datoCmsArticle: { title, featuredImage, description, articleContent, author, category, date },
       locales,
     },
     pageContext: { alternativeLanguages },
   } = data
   const { t, i18n } = useI18next()
+  console.log(datoCmsArticle)
   return (
     <Layout alternativeLanguages={alternativeLanguages}>
       <header>
@@ -39,12 +41,12 @@ const Article = data => {
                     </span>
                   </div>
                   <div class="flex-grow pl-6">
-                    <h2 class="tracking-widest text-xl title-font font-medium text-indigo-500 mb-1">
+                    <p class="tracking-widest text-xl title-font font-medium text-indigo-500 mb-1">
                       {category.name}
-                    </h2>
-                    <h1 class="title-font text-xl font-medium text-gray-400 mb-3">
+                    </p>
+                    <p class="title-font text-xl font-medium text-gray-400 mb-3">
                       {title}
-                    </h1>
+                    </p>
                     <p class="leading-relaxed mb-5 text-gray-300">
                       {description}
                     </p>
@@ -135,6 +137,80 @@ const Article = data => {
 }
 
 export default Article
+
+export const Head = ({ data, location, pageContext }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    image: [data.datoCmsArticle.featuredImage.url],
+    author: [
+      {
+        "@type": "Person",
+        name: data.datoCmsArticle.author.name,
+        /* 'url': 'https://www.example.com/' */
+      },
+    ],
+    headline: data.datoCmsArticle.title,
+    datePublished: data.datoCmsArticle.meta.firstPublishedAt,
+    dateModified: data.datoCmsArticle.meta.updatedAt,
+  }
+
+  return (
+    <Seo
+      title={data.datoCmsArticle.title}
+      description={data.datoCmsArticle.description}
+      location={location}
+      data={data}
+      pageContext={pageContext}
+    >
+      <meta
+        property="article:published_time"
+        content={data.datoCmsArticle.meta.firstPublishedAt}
+      />
+      <meta
+        property="article:modified_time"
+        content={data.datoCmsArticle.meta.updatedAt}
+      />
+      <meta property="article:section" content="Advanced Marketing Analytics" />
+      <meta
+        property="article:author"
+        content={data.datoCmsArticle.author.name}
+      />
+      {/* implements tags in datocms for this one. */}
+      {/* <meta property="article:tag" content="Article Tag" /> */}
+      <meta property="fb:admins" content="10227205602236142" />
+      {/*1540909959 */}
+
+      <meta property="og:locale" content={pageContext.i18n.language} />
+
+      {/*{pageContext.i18n.languages.map(lang => (
+        <meta property="og:locale:alternate" content={lang} key={lang} />
+      ))} */}
+      <meta
+        property="og:image"
+        content={data.datoCmsArticle.featuredImage.url}
+      />
+      <meta
+        property="og:image:secure_url"
+        content={data.datoCmsArticle.featuredImage.url}
+      />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta
+        property="og:image:width"
+        content={data.datoCmsArticle.featuredImage.width}
+      />
+      <meta
+        property="og:image:height"
+        content={data.datoCmsArticle.featuredImage.height}
+      />
+      <meta
+        property="og:image:alt"
+        content={data.datoCmsArticle.featuredImage.alt}
+      />
+      <script type="application/ld+json">{JSON.stringify({ schema })}</script>
+    </Seo>
+  )
+}
 
 export const pageQuery = graphql`
   query ArticleBySlug(

@@ -5,6 +5,7 @@ import ArticleList from "../components/article-list.js"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { StructuredText } from "react-datocms"
 import { Link, useI18next } from "gatsby-plugin-react-i18next"
+import Seo from "../components/seo"
 
 const IndexPage = ({
   data,
@@ -92,7 +93,14 @@ const IndexPage = ({
 
 export default IndexPage
 
-export const Head = () => <title>Home Page</title>
+export const Head = ({ data, location, pageContext }) => (
+  <Seo title="João Mattos | Home" data={data} location={location}>
+    <meta property="og:locale" content={pageContext.i18n.language} />
+    {pageContext.i18n.languages.map(lang => (
+      <meta property="og:locale:alternate" content={lang} key={lang} />
+    ))}
+  </Seo>
+)
 
 export const pageQuery = graphql`
   query ($language: String!) {
