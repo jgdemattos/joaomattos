@@ -2,23 +2,21 @@ import * as React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { StructuredText } from "react-datocms"
-import Mindamap from "../components/mindmap"
 import SocialIcons from "../components/social-icons"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { DateTime } from "luxon"
-import { Link, useI18next } from "gatsby-plugin-react-i18next"
+import {  useI18next } from "gatsby-plugin-react-i18next"
 import Seo from "../components/seo"
 
 const Article = data => {
   const {
-    data: {datoCmsArticle,
-      datoCmsArticle: { title, featuredImage, description, articleContent, author, category, date },
-      locales,
+    data: {
+      datoCmsArticle: { title, description, articleContent, author, category, date },
+      
     },
     pageContext: { alternativeLanguages },
   } = data
-  const { t, i18n } = useI18next()
-  console.log(datoCmsArticle)
+  const {  i18n } = useI18next()
   return (
     <Layout alternativeLanguages={alternativeLanguages}>
       <header>
@@ -50,7 +48,7 @@ const Article = data => {
                     <p class="leading-relaxed mb-5 text-gray-300">
                       {description}
                     </p>
-                    <a class="inline-flex items-center">
+                    <span class="inline-flex items-center">
                       {/* <img
                         alt="blog"
                         src="https://dummyimage.com/103x103"
@@ -68,7 +66,7 @@ const Article = data => {
                           João Mattos
                         </span>
                       </span>
-                    </a>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -123,7 +121,7 @@ const Article = data => {
                   <h2 class="title-font font-medium text-lg text-gray-300">
                     João Mattos
                   </h2>
-                  <h3 class="text-gray-500 mb-3">UI Developer</h3>
+                  <h3 class="text-gray-500 mb-3">{author.role}</h3>
                   <p class="mb-4">{author.statement}</p>
                   <SocialIcons></SocialIcons>
                 </div>

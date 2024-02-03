@@ -2,19 +2,18 @@ import * as React from "react"
 import Layout from "../components/layout.js"
 import { graphql } from "gatsby"
 import ArticleList from "../components/article-list.js"
-import { GatsbyImage } from "gatsby-plugin-image"
 import { StructuredText } from "react-datocms"
-import { Link, useI18next } from "gatsby-plugin-react-i18next"
+import {  useI18next } from "gatsby-plugin-react-i18next"
 import Seo from "../components/seo"
 
 const IndexPage = ({
-  data,
+
   data: {
     allDatoCmsArticle: { nodes },
     datoCmsHomePage,
   },
 }) => {
-  const { languages, originalPath, t, i18n } = useI18next()
+  const {  t } = useI18next()
   return (
     <Layout>
       {/* hero */}
@@ -122,7 +121,7 @@ export const pageQuery = graphql`
     allDatoCmsArticle(
       locale: $language
       filter: { slug: { ne: null } }
-      limit: 3
+      limit: 5
     ) {
       pageInfo {
         currentPage

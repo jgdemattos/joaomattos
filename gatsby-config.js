@@ -16,7 +16,7 @@ module.exports = {
       name: `João Mattos`,
       summary: `Advanced Marketing Analytics.`,
     },
-    description: `Especialista em Marketing Analytics.`,
+    description: `João Mattos | Especialista em Marketing Analytics. | Consultoria e Mentoria`,
     siteUrl: `https://mattos.pro/`,
     siteUrlNoSlash: `https://mattos.pro`,
     social: {
