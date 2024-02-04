@@ -11,48 +11,56 @@ import Seo from "../components/seo"
 const Article = data => {
   const {
     data: {
-      datoCmsArticle: { title, description, articleContent, author, category, date },
-      
+      datoCmsArticle: {
+        title,
+        description,
+        articleContent,
+        author,
+        category,
+        date,
+      },
     },
+
     pageContext: { alternativeLanguages },
   } = data
   const {  i18n } = useI18next()
+
   return (
     <Layout alternativeLanguages={alternativeLanguages}>
       <header>
-        <section class="text-gray-600 body-font text-white max-w-2xl container mx-auto ">
-          <div class="container px-5 py-4 mx-auto">
-            <div class="flex flex-wrap">
-              <div class=" ">
-                <div class="h-full flex items-start">
-                  <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none">
-                    <span class="text-gray-400 pb-2 mb-2 border-b-2 border-gray-400">
+        <section className="text-gray-600 body-font text-white max-w-2xl container mx-auto ">
+          <div className="container px-5 py-4 mx-auto">
+            <div className="flex flex-wrap">
+              <div className=" ">
+                <div className="h-full flex items-start">
+                  <div className="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+                    <span className="text-gray-400 pb-2 mb-2 border-b-2 border-gray-400">
                       {DateTime.fromISO(date)
                         .setLocale(i18n.resolvedLanguage)
                         .toLocaleString({ month: "short" })
                         .toUpperCase()}
                     </span>
-                    <span class="font-medium text-lg text-gray-400 title-font leading-none">
+                    <span className="font-medium text-lg text-gray-400 title-font leading-none">
                       {DateTime.fromISO(date)
                         .setLocale(i18n.resolvedLanguage)
                         .toLocaleString({ day: "numeric" })}
                     </span>
                   </div>
-                  <div class="flex-grow pl-6">
-                    <p class="tracking-widest text-xl title-font font-medium text-indigo-500 mb-1">
+                  <div className="flex-grow pl-6">
+                    <p className="tracking-widest text-xl title-font font-medium text-indigo-500 mb-1">
                       {category.name}
                     </p>
-                    <p class="title-font text-xl font-medium text-gray-400 mb-3">
+                    <p className="title-font text-xl font-medium text-gray-400 mb-3">
                       {title}
                     </p>
-                    <p class="leading-relaxed mb-5 text-gray-300">
+                    <p className="leading-relaxed mb-5 text-gray-300">
                       {description}
                     </p>
-                    <span class="inline-flex items-center">
+                    <span className="inline-flex items-center">
                       {/* <img
                         alt="blog"
                         src="https://dummyimage.com/103x103"
-                        class="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center"
+                        className="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center"
                       ></img> */}
                       <GatsbyImage
                         image={author.avatar.gatsbyImageData}
@@ -61,8 +69,8 @@ const Article = data => {
                         title={author.avatar.title}
                         className="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center"
                       />
-                      <span class="flex-grow flex flex-col pl-3">
-                        <span class="title-font font-medium text-gray-300">
+                      <span className="flex-grow flex flex-col pl-3">
+                        <span className="title-font font-medium text-gray-300">
                           João Mattos
                         </span>
                       </span>
@@ -100,14 +108,14 @@ const Article = data => {
         </section>
         <hr />
       </article>
-      <section class="text-gray-600 body-font text-white max-w-2xl container mx-auto px-4">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap -m-4">
-            <div class="p-4">
-              <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
+      <section className="text-gray-600 body-font text-white max-w-2xl container mx-auto px-4">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-wrap -m-4">
+            <div className="p-4">
+              <div className="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
                 {/* <img
                   alt="team"
-                  class="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4"
+                  className="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4"
                   src="https://dummyimage.com/200x200"
                 /> */}
                 <GatsbyImage
@@ -117,12 +125,12 @@ const Article = data => {
                   title={author.avatar.title}
                   className="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4"
                 />
-                <div class="flex-grow sm:pl-8">
-                  <h2 class="title-font font-medium text-lg text-gray-300">
+                <div className="flex-grow sm:pl-8">
+                  <h2 className="title-font font-medium text-lg text-gray-300">
                     João Mattos
                   </h2>
-                  <h3 class="text-gray-500 mb-3">{author.role}</h3>
-                  <p class="mb-4">{author.statement}</p>
+                  <h3 className="text-gray-500 mb-3">{author.role}</h3>
+                  <p className="mb-4">{author.statement}</p>
                   <SocialIcons></SocialIcons>
                 </div>
               </div>
@@ -155,11 +163,12 @@ export const Head = ({ data, location, pageContext }) => {
 
   return (
     <Seo
+      data={data}
+      location={location}
       title={data.datoCmsArticle.title}
       description={data.datoCmsArticle.description}
-      location={location}
-      data={data}
-      pageContext={pageContext}
+      generatedPageAltLanguages={pageContext.alternativeLanguages}
+      language={pageContext.language}
     >
       <meta
         property="article:published_time"
@@ -181,9 +190,6 @@ export const Head = ({ data, location, pageContext }) => {
 
       <meta property="og:locale" content={pageContext.i18n.language} />
 
-      {/*{pageContext.i18n.languages.map(lang => (
-        <meta property="og:locale:alternate" content={lang} key={lang} />
-      ))} */}
       <meta
         property="og:image"
         content={data.datoCmsArticle.featuredImage.url}

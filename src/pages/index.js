@@ -7,12 +7,12 @@ import {  useI18next } from "gatsby-plugin-react-i18next"
 import Seo from "../components/seo"
 
 const IndexPage = ({
-
   data: {
     allDatoCmsArticle: { nodes },
     datoCmsHomePage,
   },
 }) => {
+
   const {  t } = useI18next()
   return (
     <Layout>
@@ -26,9 +26,9 @@ const IndexPage = ({
             <p className="mb-8 leading-relaxed text-secondary">
               {datoCmsHomePage.subtitle}
             </p>
-            <p className="prose lg:prose-lg max-w-2xl mb-8 leading-relaxed text-white">
+            <span className="prose lg:prose-lg max-w-2xl mb-8 leading-relaxed text-white">
               <StructuredText data={datoCmsHomePage.description} />
-            </p>
+            </span>
             <div className="flex justify-center">
               <a
                 className="inline-flex border-0 py-2 px-6 focus:outline-none  rounded text-lg btn-primary"
@@ -49,9 +49,9 @@ const IndexPage = ({
               title={datoCmsHomePage.featuredImage.title}
               className="w-full h-full object-cover object-center"
             /> */}
-            <div class="relative">
+            <div className="relative">
               <svg
-                class="absolute w-full text-deep-purple-accent-400"
+                className="absolute w-full text-deep-purple-accent-400"
                 fill="currentColor"
                 viewBox="0 0 600 392"
               >
@@ -63,7 +63,7 @@ const IndexPage = ({
                 <rect x="315" y="260" width="75" height="132" rx="8"></rect>
               </svg>
               <svg
-                class="relative w-full text-secondary"
+                className="relative w-full text-secondary"
                 fill="currentColor"
                 viewBox="0 0 600 392"
               >
@@ -93,12 +93,13 @@ const IndexPage = ({
 export default IndexPage
 
 export const Head = ({ data, location, pageContext }) => (
-  <Seo title="João Mattos | Home" data={data} location={location}>
-    <meta property="og:locale" content={pageContext.i18n.language} />
-    {pageContext.i18n.languages.map(lang => (
-      <meta property="og:locale:alternate" content={lang} key={lang} />
-    ))}
-  </Seo>
+  <Seo
+    data={data}
+    location={location}
+    title="João Mattos | Home"
+    fixedPageAltLanguages={pageContext.i18n.languages}
+    language={pageContext.language}
+  ></Seo>
 )
 
 export const pageQuery = graphql`

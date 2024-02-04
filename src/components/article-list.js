@@ -19,7 +19,7 @@ const ArticleList = ({ articles }) => {
                 <span className="mt-1 text-gray-500 text-sm">
                   {DateTime.fromISO(article.date)
                     .setLocale(i18n.resolvedLanguage)
-                    .toLocaleString(DateTime.DATE_FULL)}{console.log(article)}
+                    .toLocaleString(DateTime.DATE_FULL)}
                 </span>
               </div>
               <Link to={"/blog/" + article.slug} key={article.slug}>

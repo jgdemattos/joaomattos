@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout.js"
 import { Link, useI18next } from "gatsby-plugin-react-i18next"
 import ArticleList from "../components/article-list.js"
+import Seo from "../components/seo"
 
 const Blog = ({
   data: {
@@ -22,7 +23,7 @@ const Blog = ({
 
           <div className="btn-group">
             {Array.from({ length: pageCount }, (_, i) => (
-              <button
+              <button key={i}
                 className={
                   "btn " + ((currentPage === i + 1 && "btn-active") || "")
                 }
@@ -42,6 +43,16 @@ const Blog = ({
     </Layout>
   )
 }
+
+export const Head = ({ data, location, pageContext }) => (
+  <Seo
+    data={data}
+    location={location}
+    title="João Mattos | Home"
+    fixedPageAltLanguages={pageContext.i18n.languages}
+    language={pageContext.language}
+  ></Seo>
+)
 
 export default Blog
 
