@@ -1,6 +1,12 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import Layout from "../components/layout.js"
+
+
+const submit=(e)=>{
+  e.preventDefault()
+  navigate('/thankyou');
+}
 
 const ContactPage = () => {
   return (
@@ -24,7 +30,7 @@ const ContactPage = () => {
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body">
               <h1 className="text-5xl font-bold">Entre em contato!</h1>
-              <form action="/thankyou">
+              <form onSubmit={(e)=>submit(e)} >
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Name</span>
